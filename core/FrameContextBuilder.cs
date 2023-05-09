@@ -17,10 +17,10 @@ public class FrameContextBuilder : IFrameContextBuilder
         _captureItems = new List<CaptureItem>();
     }
 
-    public void Capture(int x, int y, UniqueObjectType objectType)
+    public void Capture(CaptureItemCommand command)
     {
-        var captureItem = _captureItems.First(item => item.X == x && item.Y == y);
-        captureItem.UniqueObjectType = objectType;
+        var captureItem = _captureItems.First(item => item.X == command.X && item.Y == command.Y);
+        captureItem.UniqueObjectType = (UniqueObjectType)command.CaptureObjectType;
     }
 
     public void Initialize()
@@ -43,9 +43,8 @@ public class FrameContextBuilder : IFrameContextBuilder
     }
 }
 
-public interface IFrameContextBuilder
+public enum CaptureObjectType
 {
-    public void Capture(int x, int y, UniqueObjectType objectType);
-    public UniqueObjectType Get(int x, int y);
-    public void Initialize();
+    X = 0,
+    O = 1
 }

@@ -8,9 +8,25 @@ public class Program
         _session = new Session();
         TraverseLog();
 
-        _session.FrameContextBuilder.Capture(0, 0, UniqueObjectType.X);
-        _session.FrameContextBuilder.Capture(1, 0, UniqueObjectType.X);
-        _session.FrameContextBuilder.Capture(2, 0, UniqueObjectType.O);
+        CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.X);
+        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+        Console.WriteLine(response);
+
+        CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 0, CaptureObjectType.X);
+        response = (string)_session.RuleService.Capture(captureItemCommand2);
+        Console.WriteLine(response);
+
+        CaptureItemCommand captureItemCommand3 = new CaptureItemCommand(1, 0, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand3);
+        Console.WriteLine(response);
+
+        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand4);
+        Console.WriteLine(response);
+
+        //_session.FrameContextBuilder.Capture(0, 0, CaptureObjectType.X);
+        //_session.FrameContextBuilder.Capture(1, 0, CaptureObjectType.X);
+        //_session.FrameContextBuilder.Capture(2, 0, CaptureObjectType.O);
         TraverseLog();
     }
 
@@ -25,6 +41,7 @@ public class Program
             }
             Console.WriteLine();
         }
+        Console.WriteLine();
     }
 }
 
