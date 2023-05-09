@@ -47,30 +47,3 @@ public class TurnManagerService : ITurnService, ITurnFinishHandler
 
     }
 }
-
-public class TurnStateException : System.Exception
-{
-    public TurnStateException(string? message) : base(message)
-    {
-    }
-}
-
-
-public interface ITurnService
-{
-    public TurnState TurnState { get; }
-    public int CurrentTurn { get; }
-    public void NextTurn();
-}
-
-public interface ITurnFinishHandler
-{
-    public void HandleFinishRequest(ITurnFinishHandler notifyer);
-}
-
-
-public enum TurnState
-{
-    Start = 0,
-    End = 1
-}

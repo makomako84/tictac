@@ -34,12 +34,3 @@ public class CaptureItem : IFrameItem
         return new CaptureItem(x,y, UniqueObjectType.E);
     }
 }
-
-
-// Для public cupture просто создать публичный enum без E
-public enum UniqueObjectType
-{
-    E = -1,
-    X = 0,
-    O = 1
-}
