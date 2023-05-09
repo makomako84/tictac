@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MakoSystems.TicTac.Core;
-public class CaptureItem
+public class CaptureItem : IFrameItem
 {
     private int _id;
     private UniqueObjectType _uniqueObjectType;

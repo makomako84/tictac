@@ -9,19 +9,19 @@ namespace MakoSystems.TicTac.Core;
 public class FrameContextBuilder : IFrameContextBuilder
 {
     private readonly IFrame _frame;
-    private readonly IList<CaptureItem> _captureItems;
+    private readonly IFramable _captureItems;
 
     public IList<CaptureItem> CaptureItems => throw new NotImplementedException();
 
     public FrameContextBuilder(IFrame frame)
     {
         _frame = frame;
-        _captureItems = new List<CaptureItem>();
+        _captureItems = new CaptureItems(_frame.Width, _frame.Height);
     }
 
     public void Capture(CaptureItemCommand command)
     {
-        var captureItem = _captureItems.First(item => item.X == command.X && item.Y == command.Y);
+        var captureItem = (CaptureItem)_captureItems.Get(command.X, command.Y);
         captureItem.UniqueObjectType = (UniqueObjectType)command.CaptureObjectType;
     }
 
@@ -32,7 +32,8 @@ public class FrameContextBuilder : IFrameContextBuilder
             for (int y = 0; y < _frame.Height; y++)
             {
                 var captureItem = CaptureItem.CreateEmptyItem(x, y);
-                _captureItems.Add(captureItem);
+                ((CaptureItems)_captureItems).InitializeItem(captureItem);
+
                 _frame.Set(x, y, (int)captureItem.UniqueObjectType);
             }
         }
@@ -40,8 +41,35 @@ public class FrameContextBuilder : IFrameContextBuilder
 
     public UniqueObjectType Get(int x, int y)
     {
-        var item = _captureItems.First(item => item.X == x && item.Y == y).UniqueObjectType;
+        
+        var item = ((CaptureItem)_captureItems.Get(x, y)).UniqueObjectType;
         return item;
+    }
+}
+
+public class CaptureItems : IFramable
+{
+    private readonly int _width;
+    private readonly int _height;
+    private readonly IFrameItem[] _captureItems;
+    public CaptureItems(int width, int height)
+    {
+        _width = width;
+        _height = height;
+        _captureItems = (IFrameItem[])(new CaptureItem[width * height]);
+    }
+
+    public void InitializeItem(CaptureItem captureItem)
+    {
+        _captureItems[this.GetIndex(captureItem.X, captureItem.Y)] = (IFrameItem)captureItem;
+    }
+    public int Width => _width;
+
+    public int Height => _height;
+
+    public IFrameItem Get(int x, int y)
+    {
+        return _captureItems[this.GetIndex(x, y)];
     }
 }
 

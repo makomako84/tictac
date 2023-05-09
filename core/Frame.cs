@@ -1,9 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Xml.Linq;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace MakoSystems.TicTac.Core;
 
@@ -17,7 +12,7 @@ public class Frame : IFrame, IEnumerable
     public int Height => _height;
     public IFrameItem Get(int x, int y)
     {
-        return _frames[GetIndex(x, y)];
+        return _frames[this.GetIndex(x, y)];
     }
 
     public FrameItem[] Frames => _frames;
@@ -44,7 +39,7 @@ public class Frame : IFrame, IEnumerable
     
     void IFrame.Set(int x, int y, int objectId)
     {
-        _frames[GetIndex(x,y)].ObjectId = objectId;
+        _frames[this.GetIndex(x,y)].ObjectId = objectId;
     }
     
     void IFrame.Set(int x, int y, int width, int height, int objectId)
@@ -53,7 +48,7 @@ public class Frame : IFrame, IEnumerable
         {
             for(int iy = x; iy < y+width; iy++)
             {
-                _frames[GetIndex(ix, iy)].ObjectId = objectId;
+                _frames[this.GetIndex(ix, iy)].ObjectId = objectId;
             }
         }
     }
@@ -79,29 +74,20 @@ public class Frame : IFrame, IEnumerable
         {
             for(int y =0; y < _height; y++)
             {
-                _frames[GetIndex(x, y)] = new FrameItem(x, y) {ObjectId = _freeId};
+                _frames[this.GetIndex(x, y)] = new FrameItem(x, y) {ObjectId = _freeId};
             }
         }
     }
 
 
-    internal static int GetIndex(int width, int height, int x, int y)
-        => (y % height) * width + x % width;
-
-    private int GetIndex(int x, int y)
-    {
-        return (y % _height) * _width + x % _width;
-    }
-
-
-
+    #region test
     void InitTest()
     {
         for(int y=0; y < _height; y++)
         {
             for(int x=0; x < _width; x++)
             {
-                _frames[GetIndex(x,y)] = new FrameItem(x, y);
+                _frames[this.GetIndex(x,y)] = new FrameItem(x, y);
             }
         }
     }
@@ -113,6 +99,7 @@ public class Frame : IFrame, IEnumerable
             System.Console.WriteLine($"i: {i}, x:{f.X}, y:{f.Y}, val: {f.ObjectId}");
         }
     }
+    #endregion
 }
 
 
