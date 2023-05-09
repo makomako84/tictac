@@ -10,20 +10,25 @@ namespace MakoSystems.TicTac.Core;
 public class Frame : IFrame, IEnumerable
 {
     private int _width, _height;
-    private FrameItem2[] _frames;
+    private FrameItem[] _frames;
     private const int _freeId = -1;
 
     public int Width => _width;
     public int Height => _height;
-    public FrameItem2[] Frames => _frames;
+    public IFrameItem Get(int x, int y)
+    {
+        return _frames[GetIndex(x, y)];
+    }
+
+    public FrameItem[] Frames => _frames;
 
     public Frame(int width, int height)
     {
         _width = width;
         _height = height;
-        _frames = new FrameItem2[width * height];
+        _frames = new FrameItem[width * height];
     }
-    public Frame(FrameItem2[] frames, int width, int height)
+    public Frame(FrameItem[] frames, int width, int height)
     {
         _frames = frames;
         _width = width;
@@ -35,10 +40,7 @@ public class Frame : IFrame, IEnumerable
         return _frames.GetEnumerator();
     }
 
-    FrameItem2 IFrame.Get(int x, int y)
-    {
-        return _frames[GetIndex(x,y)];
-    }
+
     
     void IFrame.Set(int x, int y, int objectId)
     {
@@ -68,7 +70,7 @@ public class Frame : IFrame, IEnumerable
 
     void IFrame.Initialize(IEnumerable source)
     {
-        _frames = (FrameItem2[])source;
+        _frames = (FrameItem[])source;
     }
 
     void IFrame.Intialize()
@@ -77,7 +79,7 @@ public class Frame : IFrame, IEnumerable
         {
             for(int y =0; y < _height; y++)
             {
-                _frames[GetIndex(x, y)] = new FrameItem2(x, y) {ObjectId = _freeId};
+                _frames[GetIndex(x, y)] = new FrameItem(x, y) {ObjectId = _freeId};
             }
         }
     }
@@ -99,7 +101,7 @@ public class Frame : IFrame, IEnumerable
         {
             for(int x=0; x < _width; x++)
             {
-                _frames[GetIndex(x,y)] = new FrameItem2(x, y);
+                _frames[GetIndex(x,y)] = new FrameItem(x, y);
             }
         }
     }
@@ -114,12 +116,12 @@ public class Frame : IFrame, IEnumerable
 }
 
 
-public struct FrameItem2
+public struct FrameItem : IFrameItem
 { 
     private int _x;
     private int _y;
     private int _objectId;
-    public FrameItem2(int x, int y)
+    public FrameItem(int x, int y)
     {
         _x = x;
         _y = y;

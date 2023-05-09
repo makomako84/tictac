@@ -3,9 +3,13 @@
 public class RuleService : IRuleService
 { 
     private readonly IFrameContextBuilder _frameContextBuilder;
-    public RuleService(IFrameContextBuilder frameContextBuilder) 
+    private readonly IFrame _frame;
+    public RuleService(
+        IFrameContextBuilder frameContextBuilder,
+        IFrame frame) 
     { 
         _frameContextBuilder = frameContextBuilder;
+        _frame = frame;
     }
 
     public object Capture(CaptureItemCommand captureItemCommand)
@@ -21,6 +25,19 @@ public class RuleService : IRuleService
         {
             // some handling here
             return "Error, попытка занять занятую клетку";
+        }
+    }
+
+    private void CheckWinningState()
+    {
+        var captureItems =_frameContextBuilder.CaptureItems;
+        for(int y=0; y< _frame.Height; y++)
+        {
+            bool winningState = false;
+            for(int x = 0; x< _frame.Width; x++)
+            {
+                
+            }
         }
     }
 }

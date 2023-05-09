@@ -11,6 +11,8 @@ public class FrameContextBuilder : IFrameContextBuilder
     private readonly IFrame _frame;
     private readonly IList<CaptureItem> _captureItems;
 
+    public IList<CaptureItem> CaptureItems => throw new NotImplementedException();
+
     public FrameContextBuilder(IFrame frame)
     {
         _frame = frame;
