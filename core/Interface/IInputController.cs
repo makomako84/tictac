@@ -1,6 +1,6 @@
 ﻿namespace MakoSystems.TicTac.Core;
 
-public interface IRuleService
+public interface IInputController
 {
     public object Capture(CaptureItemCommand captureItemCommand);
 }

@@ -6,7 +6,9 @@ public class Program
     public static void Main()
     {
         _session = new Session();
-        TraverseLog(); 
+        TraverseLog();
+        Check4();
+
 
         TraverseLog();
     }
@@ -15,52 +17,52 @@ public class Program
     private static void Check4()
     {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 2, CaptureObjectType.X);
-        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+        var response = (string)_session.InputController.Capture(captureItemCommand1);
 
         CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 1, CaptureObjectType.X);
-        response = (string)_session.RuleService.Capture(captureItemCommand2);
+        response = (string)_session.InputController.Capture(captureItemCommand2);
 
         CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.X);
-        response = (string)_session.RuleService.Capture(captureItemCommand4);
+        response = (string)_session.InputController.Capture(captureItemCommand4);
     }
 
     private static void Check3()
     {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
-        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+        var response = (string)_session.InputController.Capture(captureItemCommand1);
 
         CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 1, CaptureObjectType.O);
-        response = (string)_session.RuleService.Capture(captureItemCommand2);
+        response = (string)_session.InputController.Capture(captureItemCommand2);
 
         CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 2, CaptureObjectType.O);
-        response = (string)_session.RuleService.Capture(captureItemCommand4);
+        response = (string)_session.InputController.Capture(captureItemCommand4);
     }
 
     private static void Check2()
     {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
-        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+        var response = (string)_session.InputController.Capture(captureItemCommand1);
 
         CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(0, 1, CaptureObjectType.O);
-        response = (string)_session.RuleService.Capture(captureItemCommand2);
+        response = (string)_session.InputController.Capture(captureItemCommand2);
 
         CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(0, 2, CaptureObjectType.O);
-        response = (string)_session.RuleService.Capture(captureItemCommand4);
+        response = (string)_session.InputController.Capture(captureItemCommand4);
     }
     private static void Check1()
     {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.X);
-        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+        var response = (string)_session.InputController.Capture(captureItemCommand1);
 
         CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 0, CaptureObjectType.X);
-        response = (string)_session.RuleService.Capture(captureItemCommand2);
+        response = (string)_session.InputController.Capture(captureItemCommand2);
 
         CaptureItemCommand captureItemCommand3 = new CaptureItemCommand(1, 0, CaptureObjectType.O);
-        response = (string)_session.RuleService.Capture(captureItemCommand3);
+        response = (string)_session.InputController.Capture(captureItemCommand3);
 
 
         CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.X);
-        response = (string)_session.RuleService.Capture(captureItemCommand4);
+        response = (string)_session.InputController.Capture(captureItemCommand4);
     }
 
     private static void TraverseLog()

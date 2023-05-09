@@ -1,37 +1,45 @@
 ﻿namespace MakoSystems.TicTac.Core;
 
-public class RuleService : IRuleService
-{ 
+public class CoreRuleService
+{
+    private bool _winningState;
+    public bool WinningState => _winningState;
+
     private readonly IFrameContextBuilder _frameContextBuilder;
-    public RuleService(
-        IFrameContextBuilder frameContextBuilder) 
-    { 
+    public CoreRuleService(IFrameContextBuilder frameContextBuilder)
+    {
         _frameContextBuilder = frameContextBuilder;
+        _winningState = false;
     }
 
-    public object Capture(CaptureItemCommand captureItemCommand)
+    public void OnTurnEnded()
     {
-        UniqueObjectType itemType = _frameContextBuilder.Get(captureItemCommand.X, 
-            captureItemCommand.Y);
-        if(itemType == UniqueObjectType.E)
+        _winningState = CheckWinningState();
+
+        if(_winningState )
         {
-            _frameContextBuilder.Capture(captureItemCommand);
-            if(CheckWinningState())
-            {
-                Console.WriteLine("win check: win");
-            }
-            else
-            {
-                Console.WriteLine("win check: nothing");
-            }
-            return "Success";
+            Finished();
         }
         else
         {
-            // some handling here
-            return "Error, попытка занять занятую клетку";
+            Next();
         }
+
+        Console.WriteLine($"win: {_winningState}");
     }
+
+    public void Finished()
+    {
+
+    }
+
+    public void Next()
+    {
+
+    }
+
+
+    #region check win algos
 
     private bool CheckWinningState()
     {
@@ -107,7 +115,7 @@ public class RuleService : IRuleService
         CaptureItem last2 = (CaptureItem)captureItems.Get(captureItems.Width - 1, 0);
         UniqueObjectType winObject2Type = last2.UniqueObjectType;
 
-        if(winObject1Type == UniqueObjectType.E && winObject2Type == UniqueObjectType.E)
+        if (winObject1Type == UniqueObjectType.E && winObject2Type == UniqueObjectType.E)
         {
             return winningState;
         }
@@ -126,7 +134,7 @@ public class RuleService : IRuleService
             {
                 return winningState;
             }
-        }        
+        }
 
 
         if (winObject2Type != UniqueObjectType.E)
@@ -145,4 +153,5 @@ public class RuleService : IRuleService
         }
         return winningState;
     }
+    #endregion
 }
