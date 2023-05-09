@@ -15,7 +15,11 @@ internal static class FrameIndexHelper
         }
         catch(System.DivideByZeroException e)
         {
-            Console.WriteLine(e);
+            throw new FrameIndexException("Ошибка индексирования, деление на 0", e);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("Log here");
         }
 
         return index;
