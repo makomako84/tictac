@@ -1,4 +1,4 @@
-﻿using MakoSystems.TicTac.Core;
+﻿namespace MakoSystems.TicTac.Core;
 
 public interface IFramable
 {

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace MakoSystems.TicTac.Core;
+﻿namespace MakoSystems.TicTac.Core;
 
 public class TurnManagerService : ITurnService, ITurnFinishHandler
 {
