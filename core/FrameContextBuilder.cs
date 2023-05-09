@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace MakoSystems.TicTac.Core;
+﻿namespace MakoSystems.TicTac.Core;
 public class FrameContextBuilder : IFrameContextBuilder
 {
     private readonly IFrame _frame;
     private readonly IFramable _captureItems;
 
-    public IList<CaptureItem> CaptureItems => throw new NotImplementedException();
-
+    public IFramable CaptureItems => _captureItems;
     public FrameContextBuilder(IFrame frame)
     {
         _frame = frame;
@@ -56,12 +48,12 @@ public class CaptureItems : IFramable
     {
         _width = width;
         _height = height;
-        _captureItems = (IFrameItem[])(new CaptureItem[width * height]);
+        _captureItems = (new CaptureItem[width * height]);
     }
 
     public void InitializeItem(CaptureItem captureItem)
     {
-        _captureItems[this.GetIndex(captureItem.X, captureItem.Y)] = (IFrameItem)captureItem;
+        _captureItems[this.GetIndex(captureItem.X, captureItem.Y)] = captureItem;
     }
     public int Width => _width;
 

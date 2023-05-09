@@ -6,28 +6,61 @@ public class Program
     public static void Main()
     {
         _session = new Session();
-        TraverseLog();
+        TraverseLog(); 
 
+        TraverseLog();
+    }
+
+
+    private static void Check4()
+    {
+        CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 2, CaptureObjectType.X);
+        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+
+        CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 1, CaptureObjectType.X);
+        response = (string)_session.RuleService.Capture(captureItemCommand2);
+
+        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.X);
+        response = (string)_session.RuleService.Capture(captureItemCommand4);
+    }
+
+    private static void Check3()
+    {
+        CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
+        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+
+        CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 1, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand2);
+
+        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 2, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand4);
+    }
+
+    private static void Check2()
+    {
+        CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
+        var response = (string)_session.RuleService.Capture(captureItemCommand1);
+
+        CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(0, 1, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand2);
+
+        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(0, 2, CaptureObjectType.O);
+        response = (string)_session.RuleService.Capture(captureItemCommand4);
+    }
+    private static void Check1()
+    {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.X);
         var response = (string)_session.RuleService.Capture(captureItemCommand1);
-        Console.WriteLine(response);
 
         CaptureItemCommand captureItemCommand2 = new CaptureItemCommand(1, 0, CaptureObjectType.X);
         response = (string)_session.RuleService.Capture(captureItemCommand2);
-        Console.WriteLine(response);
 
         CaptureItemCommand captureItemCommand3 = new CaptureItemCommand(1, 0, CaptureObjectType.O);
         response = (string)_session.RuleService.Capture(captureItemCommand3);
-        Console.WriteLine(response);
 
-        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.O);
+
+        CaptureItemCommand captureItemCommand4 = new CaptureItemCommand(2, 0, CaptureObjectType.X);
         response = (string)_session.RuleService.Capture(captureItemCommand4);
-        Console.WriteLine(response);
-
-        //_session.FrameContextBuilder.Capture(0, 0, CaptureObjectType.X);
-        //_session.FrameContextBuilder.Capture(1, 0, CaptureObjectType.X);
-        //_session.FrameContextBuilder.Capture(2, 0, CaptureObjectType.O);
-        TraverseLog();
     }
 
     private static void TraverseLog()

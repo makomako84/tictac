@@ -9,5 +9,5 @@ public interface IFrameContextBuilder
     public void Capture(CaptureItemCommand captureCommand);
     public UniqueObjectType Get(int x, int y);
     public void Initialize();
-    public IList<CaptureItem> CaptureItems { get; }
+    public IFramable CaptureItems { get; }
 }

@@ -12,7 +12,7 @@ public class Session
         _frameContextBuilder = new FrameContextBuilder(_frame);
         _frameContextBuilder.Initialize();
 
-        _ruleService = new RuleService(_frameContextBuilder, _frame);
+        _ruleService = new RuleService(_frameContextBuilder);
     }
 
     public IFrame Frame => _frame;
