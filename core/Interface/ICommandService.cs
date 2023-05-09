@@ -31,4 +31,9 @@ public class CaptureItemCommand : Command
     {
         throw new NotImplementedException();
     }
+
+    public override string ToString()
+    {
+        return $"Capture item at {_x},{_y} with {_captureObjectType}";
+    }
 }

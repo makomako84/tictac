@@ -3,72 +3,69 @@ using System.Runtime.CompilerServices;
 
 namespace MakoSystems.TicTac.Core;
 
-public class TurnManagerService : ITurnService, InputFinishedObserver
+public class TurnManagerService : ITurnService, ITurnFinishHandler
 {
-    private int _notifyIndex;
-
     private TurnState _turnState;
-    private CoreRuleService _ruleService;
-    private List<InputFinishObservable> _observables;
+    private ITurnFinishHandler _ruleService;
     private int _currentTurn = 0;
 
     public TurnState TurnState => _turnState;
-    public List<InputFinishObservable> Observables => _observables;
-    public int NotifyCount => _observables.Count;
     public int CurrentTurn => _currentTurn;
 
     public TurnManagerService(CoreRuleService ruleService)
     {
-        _observables = new List<InputFinishObservable>();
         _turnState = TurnState.Start;
         _ruleService = ruleService;
-        _notifyIndex = 0;
-    }
-
-    public void Notify()
-    {
-        _notifyIndex++;
-        if(_notifyIndex == NotifyCount)
-        {
-            _turnState = TurnState.End;
-            _ruleService.OnTurnEnded();
-        }
-    }
-
-    public void Subscribe(InputFinishObservable observable)
-    {
-        _observables.Add(observable);
-    }
-
-    public void Unsubscribe(InputFinishObservable observable)
-    {
-        _observables.Remove(observable);
     }
 
     public void NextTurn()
     {
-        _notifyIndex = 0;
-        _currentTurn++;
-        _turnState = TurnState.Start;
+        if(_turnState == TurnState.End)
+        {
+            Console.WriteLine("Turn finished");
+            _currentTurn++;
+            _turnState = TurnState.Start;
+            Console.WriteLine($"Current turn: {_currentTurn}");
+        }
+        else
+        {
+            throw new TurnStateException("Try to start not finished turn");
+        }
+    }
+
+    public void HandleFinishRequest(ITurnFinishHandler notifyer)
+    {
+        if(_turnState == TurnState.Start)
+        {
+            _turnState = TurnState.End;
+            _ruleService.HandleFinishRequest(this);
+        }
+        else
+        {
+            throw new TurnStateException("Try to finish finished turn");
+        }
+
     }
 }
-public interface InputFinishObservable
+
+public class TurnStateException : System.Exception
 {
-    public InputFinishedObserver Observer { get; }
+    public TurnStateException(string? message) : base(message)
+    {
+    }
 }
-public interface InputFinishedObserver
-{
-    public void Subscribe(InputFinishObservable observable);
-    public void Unsubscribe(InputFinishObservable observable);
-    public List<InputFinishObservable> Observables { get; }
-    public void Notify();
-    public int NotifyCount { get; }
-}
+
 
 public interface ITurnService
 {
+    public TurnState TurnState { get; }
     public int CurrentTurn { get; }
     public void NextTurn();
+}
+
+public interface ITurnFinishHandler
+{
+    public void HandleFinishRequest(ITurnFinishHandler notifyer);
 }
 
 

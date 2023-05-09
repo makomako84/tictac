@@ -1,8 +1,9 @@
 ﻿namespace MakoSystems.TicTac.Core;
 
-public class CoreRuleService
+public class CoreRuleService : ITurnFinishHandler
 {
     private bool _winningState;
+    private CaptureObjectType _winner;
     public bool WinningState => _winningState;
 
     private readonly IFrameContextBuilder _frameContextBuilder;
@@ -12,30 +13,18 @@ public class CoreRuleService
         _winningState = false;
     }
 
-    public void OnTurnEnded()
+    public void HandleFinishRequest(ITurnFinishHandler notifyer)
     {
         _winningState = CheckWinningState();
 
-        if(_winningState )
+        if (_winningState)
         {
-            Finished();
+            Console.WriteLine($"System finished, winner: {_winner}");
         }
         else
         {
-            Next();
+            ((TurnManagerService)notifyer).NextTurn();
         }
-
-        Console.WriteLine($"win: {_winningState}");
-    }
-
-    public void Finished()
-    {
-
-    }
-
-    public void Next()
-    {
-
     }
 
 
@@ -153,5 +142,7 @@ public class CoreRuleService
         }
         return winningState;
     }
+
+
     #endregion
 }

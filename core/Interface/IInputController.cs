@@ -2,5 +2,5 @@
 
 public interface IInputController
 {
-    public object Capture(CaptureItemCommand captureItemCommand);
+    public bool Capture(CaptureItemCommand captureItemCommand);
 }

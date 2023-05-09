@@ -1,36 +1,39 @@
 ﻿namespace MakoSystems.TicTac.Core;
 
-public class InputController : IInputController, InputFinishObservable
+public class InputController : IInputController, ITurnFinishHandler
 { 
     private readonly IFrameContextBuilder _frameContextBuilder;
-    private readonly TurnManagerService _turnManagerService;
+    private readonly ITurnService _turnManagerService;
     public InputController(
         IFrameContextBuilder frameContextBuilder,
-        TurnManagerService turnManagerService) 
+        ITurnService turnManagerService) 
     { 
         _frameContextBuilder = frameContextBuilder;
         _turnManagerService = turnManagerService;
     }
 
-    public InputFinishedObserver Observer => _turnManagerService;
-
-    public object Capture(CaptureItemCommand captureItemCommand)
+    public bool Capture(CaptureItemCommand captureItemCommand)
     {
-        UniqueObjectType itemType = _frameContextBuilder.Get(captureItemCommand.X, 
-            captureItemCommand.Y);
+        int x = captureItemCommand.X;
+        int y = captureItemCommand.Y;
+        UniqueObjectType itemType = _frameContextBuilder.Get(x, y);
+
         if(itemType == UniqueObjectType.E && 
             _turnManagerService.TurnState == TurnState.Start)
         {
             _frameContextBuilder.Capture(captureItemCommand);
-            InputFinished();
-            return "Success";
+            Console.WriteLine(captureItemCommand);
+            return true;
         }
         else
         {
             // some handling here
-            return "Error, попытка занять занятую клетку";
+            return false;
         }
     }
 
-    private void InputFinished() => Observer.Notify();
+    public void HandleFinishRequest(ITurnFinishHandler notifyer)
+    {
+        ((ITurnFinishHandler)_turnManagerService).HandleFinishRequest(notifyer);
+    }
 }
