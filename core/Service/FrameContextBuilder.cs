@@ -4,10 +4,12 @@ public class FrameContextBuilder : IFrameContextBuilder
     private readonly IFrame _frame;
     private readonly IFramable _captureItems;
 
+    public IFramable Frame => _frame;
     public IFramable CaptureItems => _captureItems;
-    public FrameContextBuilder(IFrame frame)
+    public FrameContextBuilder()
     {
-        _frame = frame;
+        // а цифры через конфу передавать
+        _frame = new Frame(3, 3);
         _captureItems = new CaptureItems(_frame.Width, _frame.Height);
     }
 

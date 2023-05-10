@@ -1,28 +1,29 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace MakoSystems.TicTac.Core;
 
 public class Session
 {
-    private readonly IFrame _frame;
-    private readonly IFrameContextBuilder _frameContextBuilder;
-    private readonly IInputController _inputController;
-    private readonly CoreRuleService _coreRuleService;
-    private readonly TurnManagerService _turnManagerService;
+    private readonly ServiceProvider _container;
     public Session()
     {
-        _frame = new Frame(3, 3);
-
-        _frameContextBuilder = new FrameContextBuilder(_frame);
-        _frameContextBuilder.Initialize();
-
-        _coreRuleService = new CoreRuleService(_frameContextBuilder);
-        _turnManagerService = new TurnManagerService(_coreRuleService);
-
-        _inputController = new InputController(_frameContextBuilder, _turnManagerService);
-        
+        _container = GetServiceProvider();
+        var contextBuilder = _container.GetRequiredService<IFrameContextBuilder>();
+        contextBuilder.Initialize();
     }
 
-    public IFrame Frame => _frame;
-    public IFrameContextBuilder FrameContextBuilder => _frameContextBuilder;
-    public IInputController InputController  => _inputController;
-    public CoreRuleService CoreRuleService => _coreRuleService;
+    private ServiceProvider GetServiceProvider()
+    {
+        ServiceCollection services = new();
+        services.AddSingleton<IFrameContextBuilder, FrameContextBuilder>();
+        services.AddSingleton<CoreRuleService>();
+        services.AddSingleton<ITurnService, TurnManagerService>();
+        services.AddSingleton<IInputController, InputController>();
+        return services.BuildServiceProvider();
+    }
+
+    //public IFrame Frame => _frame;
+    public IFrameContextBuilder FrameContextBuilder => _container.GetRequiredService<IFrameContextBuilder>();
+    public IInputController InputController => _container.GetRequiredService<IInputController>();
+    public CoreRuleService CoreRuleService => _container.GetRequiredService<CoreRuleService>();
 }

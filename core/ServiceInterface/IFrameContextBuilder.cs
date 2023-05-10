@@ -10,4 +10,5 @@ public interface IFrameContextBuilder
     public UniqueObjectType Get(int x, int y);
     public void Initialize();
     public IFramable CaptureItems { get; }
+    public IFramable Frame { get; }
 }

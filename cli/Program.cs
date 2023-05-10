@@ -98,9 +98,9 @@ public class Program
 
     private static void TraverseLog()
     {
-        for (int y = 0; y < _session.Frame.Height; y++)
+        for (int y = 0; y < _session.FrameContextBuilder.Frame.Height; y++)
         {
-            for (int x = 0; x < _session.Frame.Height; x++)
+            for (int x = 0; x < _session.FrameContextBuilder.Frame.Height; x++)
             {
                 var frameItem = _session.FrameContextBuilder.Get(x, y);
                 System.Console.Write(frameItem.ToString() + " ");
