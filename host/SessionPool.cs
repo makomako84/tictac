@@ -15,9 +15,9 @@ public class SessionPool : ISessionPool
         throw new NotImplementedException();
     }
 
-    public Session GetNewSession()
+    public Session GetNewSession(Guid clientId)
     {
-        var session = new Session();
+        var session = new Session(clientId);
         _sessions.Add(session);
         return session;
     }
@@ -30,7 +30,7 @@ public class SessionPool : ISessionPool
 
 public interface ISessionPool
 {
-    public Session GetNewSession();
+    public Session GetNewSession(Guid clientId);
     public Session GetExistingSession(Guid id);
     public void TerminateSession(Guid id);
 }

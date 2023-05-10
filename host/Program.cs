@@ -1,5 +1,6 @@
 ﻿using MakoSystems.TicTac.Host;
 using MakoSystems.TicTac.Tests;
+using MakoSystems.TicTac.Network;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,18 +11,22 @@ using var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         var config = context.Configuration;
+        services.Configure<ServerOptions>(config.GetSection(ServerOptions.Section));
+        services.AddTransient<Server>();
         services.AddSingleton<ISessionPool, SessionPool>();
     })
     .Build();
 
+#region run server
 
-var pool = host.Services.GetRequiredService<ISessionPool>();
+CancellationTokenSource cancellationTokenSource = new();
+Console.CancelKeyPress += (sender, e) =>
+{
+    cancellationTokenSource.Cancel();
+};
+var service = host.Services.GetRequiredService<Server>();
+await service.InitializeAsync();
+await service.RunServerAsync(cancellationTokenSource.Token);
+Console.ReadLine();
 
-var session1 = pool.GetNewSession();
-var test1 = new CoreTests(session1);
-test1.Check1();
-
-var session2 = pool.GetNewSession();
-var test2 = new CoreTests(session2);
-test2.Check2();
-
+#endregion

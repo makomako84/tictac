@@ -4,12 +4,15 @@ namespace MakoSystems.TicTac.Core;
 
 public class Session
 {
-    private readonly Guid _sessionId;  
+    private readonly Guid _sessionId;
+    private readonly Guid _clientId;
     private readonly ServiceProvider _container;
 
     public Guid SessionId => _sessionId;
-    public Session()
+    public Guid ClientId => _clientId;
+    public Session(Guid clientId)
     {
+        _clientId = clientId;
         _sessionId = Guid.NewGuid();
 
         Console.WriteLine($"New session inited, {_sessionId}");
