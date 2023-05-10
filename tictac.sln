@@ -3,19 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "core", "core\core.csproj", "{4F99EFF2-1DB4-4404-9FD0-3DAB4754B3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core", "core\core.csproj", "{4F99EFF2-1DB4-4404-9FD0-3DAB4754B3FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cli", "cli\cli.csproj", "{457581D9-81D5-402D-8AE1-CF58EFB2540C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "cli\test.csproj", "{457581D9-81D5-402D-8AE1-CF58EFB2540C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "host", "host\host.csproj", "{EAFDD7FD-58ED-4494-9C36-AE9889CED388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "host", "host\host.csproj", "{EAFDD7FD-58ED-4494-9C36-AE9889CED388}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4F99EFF2-1DB4-4404-9FD0-3DAB4754B3FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +27,8 @@ Global
 		{EAFDD7FD-58ED-4494-9C36-AE9889CED388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAFDD7FD-58ED-4494-9C36-AE9889CED388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAFDD7FD-58ED-4494-9C36-AE9889CED388}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

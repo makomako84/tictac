@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\core\core.csproj" />
-    <ProjectReference Include="..\cli\cli.csproj" />
+    <ProjectReference Include="..\cli\test.csproj" />
   </ItemGroup>
 
   <ItemGroup>
