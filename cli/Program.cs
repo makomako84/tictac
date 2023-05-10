@@ -6,9 +6,21 @@ public class Program
     public static void Main()
     {
         _session = new Session();
+        var tests = new CoreTests(_session);
+    }
+}
+
+public class CoreTests
+{
+    private static Session _session;
+
+    public CoreTests(Session session)
+    {
+        _session = session;
         TraverseLog();
         Check4();
     }
+
     private static void HandleTurn(bool response)
     {
         // (IHandler)InputController => (IHandler)TurnManagerService => (IHandler)CoreRule => (Class)TurnManagerService
