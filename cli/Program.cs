@@ -2,37 +2,30 @@
 
 public class Program
 {
-    private static Session _session;
     public static void Main()
     {
-        _session = new Session();
-        var tests = new CoreTests(_session);
+        new CoreTests(new Session()).Check1();
+        new CoreTests(new Session()).Check2();
+        new CoreTests(new Session()).Check3();
+        new CoreTests(new Session()).Check4();
+
     }
 }
 
 public class CoreTests
 {
-    private static Session _session;
+    private Session _session;
 
     public CoreTests(Session session)
     {
         _session = session;
+    }
+
+    public void Check4()
+    {
+        Console.WriteLine("===Diagonal 2 check===");
         TraverseLog();
-        Check4();
-    }
 
-    private static void HandleTurn(bool response)
-    {
-        // (IHandler)InputController => (IHandler)TurnManagerService => (IHandler)CoreRule => (Class)TurnManagerService
-        if (response)
-        {
-            ITurnFinishHandler finishHandler = (ITurnFinishHandler)_session.InputController;
-            finishHandler.HandleFinishRequest(null);
-        }
-    }
-
-    private static void Check4()
-    {
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 2, CaptureObjectType.X);
         bool response = _session.InputController.Capture(captureItemCommand1);
         HandleTurn(response);
@@ -49,8 +42,11 @@ public class CoreTests
         TraverseLog();
     }
 
-    private static void Check3()
+    public void Check3()
     {
+        Console.WriteLine("===Diagonal 1 check===");
+        TraverseLog();
+
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
         var response = _session.InputController.Capture(captureItemCommand1);
         HandleTurn(response);
@@ -67,8 +63,11 @@ public class CoreTests
         TraverseLog();
     }
 
-    private static void Check2()
+    public void Check2()
     {
+        Console.WriteLine("===Vertical check===");
+        TraverseLog();
+
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.O);
         var response = _session.InputController.Capture(captureItemCommand1);
         HandleTurn(response);
@@ -84,8 +83,11 @@ public class CoreTests
         HandleTurn(response);
         TraverseLog();
     }
-    private static void Check1()
+    public void Check1()
     {
+        Console.WriteLine("===Horizontal check===");
+        TraverseLog();
+
         CaptureItemCommand captureItemCommand1 = new CaptureItemCommand(0, 0, CaptureObjectType.X);
         var response = _session.InputController.Capture(captureItemCommand1);
         HandleTurn(response);
@@ -108,7 +110,17 @@ public class CoreTests
         TraverseLog();
     }
 
-    private static void TraverseLog()
+    private void HandleTurn(bool response)
+    {
+        // (IHandler)InputController => (IHandler)TurnManagerService => (IHandler)CoreRule => (Class)TurnManagerService
+        if (response)
+        {
+            ITurnFinishHandler finishHandler = (ITurnFinishHandler)_session.InputController;
+            finishHandler.HandleFinishRequest(null);
+        }
+    }
+
+    private void TraverseLog()
     {
         for (int y = 0; y < _session.FrameContextBuilder.Frame.Height; y++)
         {
