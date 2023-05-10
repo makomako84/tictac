@@ -4,9 +4,16 @@ namespace MakoSystems.TicTac.Core;
 
 public class Session
 {
+    private readonly Guid _sessionId;  
     private readonly ServiceProvider _container;
+
+    public Guid SessionId => _sessionId;
     public Session()
     {
+        _sessionId = Guid.NewGuid();
+
+        Console.WriteLine($"New session inited, {_sessionId}");
+
         _container = GetServiceProvider();
         var contextBuilder = _container.GetRequiredService<IFrameContextBuilder>();
         contextBuilder.Initialize();

@@ -9,6 +9,5 @@ public class Program
         new CoreTests(new Session()).Check2();
         new CoreTests(new Session()).Check3();
         new CoreTests(new Session()).Check4();
-
     }
 }
