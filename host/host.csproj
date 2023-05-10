@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\core\core.csproj" />
-    <ProjectReference Include="..\cli\test.csproj" />
+    <ProjectReference Include="..\test\test.csproj" />
   </ItemGroup>
 
   <ItemGroup>
